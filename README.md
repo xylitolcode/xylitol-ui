@@ -2,7 +2,7 @@
 
 A React component collection for expressive front-end effects.
 
-[Repository](https://github.com/xylitolcode/xylitol-ui) · [npm](https://www.npmjs.com/package/@xylitol/ui) · MIT
+[Showcase](https://xylitolcode.github.io/xylitol-ui/) · [Repository](https://github.com/xylitolcode/xylitol-ui) · [npm](https://www.npmjs.com/package/@xylitol/ui) · MIT
 
 ## HollowFlowText
 
