@@ -7,9 +7,9 @@ export interface ChapterEntry {
 }
 
 /**
- * The page is one scroll, four chapters. Everything else — the rail, the section
- * headers, the order on screen — is derived from this list, so adding a chapter
- * never means touching four different files.
+ * The page is one scroll, a chapter per component. Everything else — the rail,
+ * the section headers, the order on screen — is derived from this list, so
+ * adding a chapter never means touching four different files.
  */
 export const CHAPTERS = [
   {
@@ -34,17 +34,24 @@ export const CHAPTERS = [
     lede: 'A read head travels the line. Everything behind it keeps full ink, everything ahead stays a ghost, and the hot edge cools back to ink along a trail whose length follows its speed. Hand it a progress value and the sentence reports itself; leave the value out and it loops while something thinks.',
   },
   {
-    slug: 'variants',
+    slug: 'dither',
     index: '04',
+    name: 'DitherButton',
+    title: 'The halo is a halftone, not a haze.',
+    lede: 'A pill whose surface is a grid of cells and whose light is a 4×4 Bayer matrix. Move across it and the glow arrives as rings of dots that switch on at exact thresholds; press it and a ring travels outward, picking cells off as it passes. Sparks land on four brightness rungs, so nothing in the field is a smooth gradient.',
+  },
+  {
+    slug: 'variants',
+    index: '05',
     name: 'Props',
     title: 'Same frame, three moods.',
     lede: 'The fill is a prop, not a baked-in decision. Keep it solid, stop at the bare outline, or pin a target open so the box stays where it is. Hover any of the three to bring the frame in.',
   },
   {
     slug: 'install',
-    index: '05',
+    index: '06',
     name: 'Install',
-    title: 'Three components, one stylesheet.',
+    title: 'Four components, one stylesheet.',
     lede: 'Zero runtime dependencies. Drop it into a paragraph and the text keeps flowing like text — no wrappers, no layout shifts, no reset.',
   },
 ] as const satisfies readonly ChapterEntry[]

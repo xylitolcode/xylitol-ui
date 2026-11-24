@@ -22,3 +22,6 @@ export type {
 
 export { SCAN_DEFAULTS, ScanText } from './components/ScanText'
 export type { ScanState, ScanTextProps } from './components/ScanText'
+
+export { DITHER_DEFAULTS, DitherButton } from './components/DitherButton'
+export type { DitherButtonProps, DitherButtonState } from './components/DitherButton'

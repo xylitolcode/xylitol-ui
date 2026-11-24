@@ -24,8 +24,9 @@ export function Hero() {
         </div>
 
         <p className="hero__lede" data-reveal>
-          Two effects for text that answers back. An outline that flows and only fills under your
-          cursor, and a selection frame that knows which edge you came through.
+          Three text effects and one button that answers back. An outline that flows and only
+          fills under your cursor, a selection frame that knows which edge you came through, a
+          reading head that scans the line, and a pill whose light arrives as halftone dots.
         </p>
 
         <div className="hero__actions" data-reveal>

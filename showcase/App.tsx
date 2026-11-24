@@ -2,6 +2,7 @@ import { CHAPTERS, CHAPTER_SLUGS } from './registry'
 import { useReveal } from './lib/reveal'
 import { useScrollSpy } from './lib/scrollSpy'
 import { Hero } from './sections/Hero'
+import { DitherSection } from './sections/DitherSection'
 import { HollowSection } from './sections/HollowSection'
 import { InstallSection } from './sections/InstallSection'
 import { ScanSection } from './sections/ScanSection'
@@ -69,6 +70,7 @@ export function App() {
         <HollowSection />
         <SelectionSection />
         <ScanSection />
+        <DitherSection />
         <VariantsSection />
         <InstallSection />
       </main>

@@ -574,7 +574,42 @@ code {
   line-height: 1.7;
 }
 
-/* ── 04 variants ─────────────────────────────────────────── */
+/* ── 04 dither ───────────────────────────────────────────── */
+
+.dither-stage {
+  justify-content: center;
+}
+
+.dither-scrubs {
+  display: flex;
+  flex: 1 1 100%;
+  flex-wrap: wrap;
+  gap: 10px 22px;
+}
+
+.dither-scrubs .console__scrub {
+  flex: 1 1 190px;
+}
+
+.dither-prose {
+  display: grid;
+  gap: 14px;
+  max-width: 68ch;
+  margin-top: clamp(38px, 5.5vh, 60px);
+}
+
+.dither-prose p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 13.5px;
+  line-height: 1.75;
+}
+
+.dither-prose__note {
+  color: var(--dim);
+}
+
+/* ── 05 variants ─────────────────────────────────────────── */
 
 .variants {
   display: grid;
@@ -610,7 +645,7 @@ code {
   line-height: 1.7;
 }
 
-/* ── 05 install ──────────────────────────────────────────── */
+/* ── 06 install ──────────────────────────────────────────── */
 
 .code {
   overflow: hidden;

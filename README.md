@@ -219,6 +219,79 @@ it wraps with the text instead of starting a new box. Selection still works, but
 the highlight paints behind transparent glyphs, so treat heavily-selected copy as
 a poor fit for the effect.
 
+## DitherButton
+
+A pill whose surface is a field of cells. Light is not a gradient: a 4×4 Bayer
+matrix decides which cells switch on, so the pointer halo arrives as rings of dots
+that cross exact thresholds instead of fading like a haze. A scatter of sparks
+rides on top, and pressing sends a ring outward that picks cells off as it passes.
+
+```tsx
+import { DitherButton } from '@xylitol0520/ui'
+import '@xylitol0520/ui/style.css'
+
+export function Install() {
+  return (
+    <DitherButton
+      busyLabel="Copying"
+      doneLabel="Copied"
+      onAction={() => navigator.clipboard.writeText('pnpm add @xylitol0520/ui')}
+    >
+      Copy install command
+    </DitherButton>
+  )
+}
+```
+
+The button never assumes what it is for. `onAction` does the work and the promise
+decides the states: pending holds `busy`, settling lands on `done`, rejecting
+returns to `idle`. `doneHold` decides how long the done label stays pinned — `0`
+leaves it there until the next press. Without `onAction` the button still lights
+up and still ripples; it just never leaves `idle`.
+
+### Props
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `children` | `ReactNode` | required | Resting label. |
+| `onAction` | `() => Promise<unknown> \| unknown` | — | Work run on press. The returned promise drives `busy` → `done` → `idle`. |
+| `busyLabel` | `ReactNode` | `children` | Label while the action is pending. |
+| `doneLabel` | `ReactNode` | `children` | Label once the action settles. |
+| `doneHold` | `number` | `1600` | Milliseconds the done label stays pinned. `0` keeps it until the next press. |
+| `color` | `string` | `#3074FE` | Accent the surface, the ring and the dust are mixed from. |
+| `radius` | `number` | `68` | Radius of the pointer field, in pixels. |
+| `cell` | `number` | `4` | Cell pitch in pixels; the seam is 1 px. Below 3 the gaps close. |
+| `spark` | `number` | `0.18` | Sparks on top of the ordered field, `0` to `1`. `0` leaves a pure halftone. |
+| `icon` | `ReactNode \| null` | dot mark | Trailing mark, swapped for a dotted check on `done`. `null` drops it. |
+| `disabled` | `boolean` | `false` | Blocks the press and the spark field. |
+| `type` | `'button' \| 'submit' \| 'reset'` | `'button'` | Button type. |
+| `className` | `string` | — | Additional class name. |
+| `style` | `CSSProperties` | — | Inline style and component CSS custom properties. |
+
+The field is a canvas in the button's own box: cells are `cell` px on a 1 px seam,
+the grid is centred so the unused sliver splits between the edges, and the device
+pixel ratio is capped at 2 so a retina screen does not quadruple the work. Each
+cell stores one threshold taken from the Bayer matrix plus a hair of jitter;
+coverage above that threshold switches the cell on, and a lit cell paints the
+alpha it was asked for, capped so even a dense halo still reads as separate dots.
+
+The dust is the accent pulled 84% toward white, mixed once per render and reused
+for every cell — which is why a single colour prop is enough and why the effect
+holds on any surface. Sparks land on four brightness rungs, a 2-bit ramp, and
+decay on one shared time constant, so the field settles instead of lingering. No
+smooth gradient is ever drawn.
+
+Style it through the `--dither-*` custom properties: `--dither-color`,
+`--dither-ink`, `--dither-ring` and `--dither-success` (the mint the done state
+borrows). The frame loop parks as soon as no cell is lit, nothing is hovered and
+nothing is pending, so an idle button runs no frames at all.
+
+`prefers-reduced-motion` drops sparks and ripples; the halo keeps painting, because
+it is a still image rather than motion. Printed pages lose the canvas and keep a
+plain key. The root is a real `<button>`, so focus, Enter and Space all work — a
+keyboard press starts its ring at the centre, since there is no pointer to start
+it from.
+
 ## Development
 
 ```bash
