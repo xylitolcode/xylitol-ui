@@ -8,6 +8,8 @@ import {
   type PointerEvent as ReactPointerEvent,
 } from 'react'
 
+import './HollowFlowText.css'
+
 const VIEWBOX_WIDTH = 1200
 const VIEWBOX_HEIGHT = 240
 const TEXT_BASELINE = 166

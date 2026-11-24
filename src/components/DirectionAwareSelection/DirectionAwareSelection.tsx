@@ -8,6 +8,8 @@ import {
   type SelectionFillOn,
 } from './context'
 
+import './DirectionAwareSelection.css'
+
 export interface DirectionAwareSelectionProps {
   /** Accent used by the frame, the corner handles, the sweep and the badge. */
   color?: string

@@ -1,2 +1,3 @@
-@import './components/HollowFlowText/HollowFlowText.css';
-@import './components/DirectionAwareSelection/DirectionAwareSelection.css';
+/* 组件样式由各自模块负责引入（`HollowFlowText.tsx` / `DirectionAwareSelection.tsx`），
+   这样无论走库构建还是被站点直接引用源码，CSS 都跟着组件走。
+   根入口保留这个文件，仅仅是为了让构建产物固定产出唯一的 dist/index.css。 */
