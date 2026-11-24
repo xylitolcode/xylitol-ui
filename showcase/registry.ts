@@ -27,17 +27,24 @@ export const CHAPTERS = [
     lede: 'Every word is its own target. Come at it from the left and the accent sweeps in from the left; approach from below and it rises. Four corner handles snap out 60 ms apart, and the frame springs between words instead of teleporting.',
   },
   {
-    slug: 'variants',
+    slug: 'scan',
     index: '03',
+    name: 'ScanText',
+    title: 'The sentence is the progress bar.',
+    lede: 'A read head travels the line. Everything behind it keeps full ink, everything ahead stays a ghost, and the hot edge cools back to ink along a trail whose length follows its speed. Hand it a progress value and the sentence reports itself; leave the value out and it loops while something thinks.',
+  },
+  {
+    slug: 'variants',
+    index: '04',
     name: 'Props',
     title: 'Same frame, three moods.',
     lede: 'The fill is a prop, not a baked-in decision. Keep it solid, stop at the bare outline, or pin a target open so the box stays where it is. Hover any of the three to bring the frame in.',
   },
   {
     slug: 'install',
-    index: '04',
+    index: '05',
     name: 'Install',
-    title: 'Two components, one stylesheet.',
+    title: 'Three components, one stylesheet.',
     lede: 'Zero runtime dependencies. Drop it into a paragraph and the text keeps flowing like text — no wrappers, no layout shifts, no reset.',
   },
 ] as const satisfies readonly ChapterEntry[]

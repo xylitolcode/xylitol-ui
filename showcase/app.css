@@ -459,7 +459,122 @@ code {
   line-height: 1.6;
 }
 
-/* ── 03 variants ─────────────────────────────────────────── */
+/* ── 03 scan ─────────────────────────────────────────────── */
+
+.console {
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.008));
+}
+
+.console__stage {
+  display: flex;
+  align-items: center;
+  min-height: clamp(140px, 20vh, 196px);
+  padding: clamp(26px, 3.4vw, 44px);
+  font-size: clamp(19px, 2.3vw, 30px);
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  line-height: 1.4;
+}
+
+.console__bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px 16px;
+  border-top: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.console__states {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.console__state {
+  padding: 6px 12px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  transition: color 0.18s ease, border-color 0.18s ease, background-color 0.18s ease;
+}
+
+.console__state:hover {
+  border-color: var(--line-strong);
+  color: var(--ink);
+}
+
+.console__state[data-active] {
+  border-color: rgba(48, 116, 254, 0.55);
+  background: rgba(48, 116, 254, 0.14);
+  color: #a9c2ff;
+}
+
+.console__scrub {
+  display: flex;
+  flex: 1 1 240px;
+  align-items: center;
+  gap: 12px;
+  justify-content: flex-end;
+  color: var(--dim);
+  font-family: var(--mono);
+  font-size: 11px;
+}
+
+.console__scrub-label {
+  letter-spacing: 0.08em;
+}
+
+.console__scrub input {
+  flex: 1 1 auto;
+  min-width: 90px;
+  max-width: 220px;
+  accent-color: var(--accent);
+}
+
+.console__scrub-value {
+  min-width: 4ch;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+.scan-prose {
+  display: grid;
+  gap: 18px;
+  max-width: 68ch;
+  margin-top: clamp(38px, 5.5vh, 60px);
+}
+
+.scan-prose p {
+  margin: 0;
+}
+
+.scan-prose .scan-text {
+  color: #d9dde9;
+  font-size: clamp(17px, 1.7vw, 22px);
+  font-weight: 500;
+  line-height: 1.66;
+  letter-spacing: -0.01em;
+}
+
+.scan-prose__note {
+  color: var(--dim);
+  font-size: 13.5px;
+  line-height: 1.7;
+}
+
+/* ── 04 variants ─────────────────────────────────────────── */
 
 .variants {
   display: grid;
@@ -495,7 +610,7 @@ code {
   line-height: 1.7;
 }
 
-/* ── 04 install ──────────────────────────────────────────── */
+/* ── 05 install ──────────────────────────────────────────── */
 
 .code {
   overflow: hidden;

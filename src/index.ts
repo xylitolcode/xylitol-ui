@@ -19,3 +19,6 @@ export type {
   SelectionSide,
   SelectionTargetProps,
 } from './components/DirectionAwareSelection'
+
+export { SCAN_DEFAULTS, ScanText } from './components/ScanText'
+export type { ScanState, ScanTextProps } from './components/ScanText'

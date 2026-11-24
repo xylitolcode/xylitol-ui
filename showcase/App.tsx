@@ -4,6 +4,7 @@ import { useScrollSpy } from './lib/scrollSpy'
 import { Hero } from './sections/Hero'
 import { HollowSection } from './sections/HollowSection'
 import { InstallSection } from './sections/InstallSection'
+import { ScanSection } from './sections/ScanSection'
 import { SelectionSection } from './sections/SelectionSection'
 import { VariantsSection } from './sections/VariantsSection'
 
@@ -67,6 +68,7 @@ export function App() {
       <main className="chapters">
         <HollowSection />
         <SelectionSection />
+        <ScanSection />
         <VariantsSection />
         <InstallSection />
       </main>

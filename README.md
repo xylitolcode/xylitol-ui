@@ -153,6 +153,72 @@ The handwritten hint uses `Caveat`; the showcase page loads it, and the CSS fall
 `Bradley Hand`, `Segoe Print` and `cursive` when the font is not available. Point
 `--das-hint-font` at your own loaded face if you want a different hand.
 
+## ScanText
+
+A read head travels the line. Every glyph behind it keeps its full ink, every
+glyph ahead of it stays a ghost, and the head itself is a hot edge that cools
+back to ink along a trail. The head sits at `progress`, not at a point in time,
+so the sentence doubles as a progress bar.
+
+```tsx
+import { ScanText } from '@xylitol0520/ui'
+import '@xylitol0520/ui/style.css'
+
+export function Status() {
+  return (
+    <ScanText state="streaming" progress={0.42} readout>
+      Reading 1,284 tokens for collisions
+    </ScanText>
+  )
+}
+```
+
+Five states cover the lifecycle. `pending` loops at `duration` seconds per pass
+while something is thinking, `streaming` tracks `progress` and settles when the
+value stops moving, `done` lets the head run off the end so the line simply
+reads as text again, and `error` parks the head where it died and turns it red.
+`idle` paints nothing, attaches no styles and never starts a frame.
+
+| State | Read head | Trail |
+| --- | --- | --- |
+| `idle` | — | — |
+| `pending` | loops left to right | steady |
+| `streaming` | eases to `progress` | stretches with speed, collapses when it parks |
+| `done` | exits past the last glyph | collapses to nothing |
+| `error` | holds position, turns red | shortens |
+
+### Props
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `children` | `string` | required | Text the head travels across. |
+| `state` | `'idle' \| 'pending' \| 'streaming' \| 'done' \| 'error'` | `'idle'` | Lifecycle of the scan. |
+| `progress` | `number` | — | Head position from 0 to 1. Required for a determinate scan; omit it and `streaming` falls back to the loop. |
+| `duration` | `number` | `2.8` | Seconds per pass in the indeterminate loop. |
+| `color` | `string` | `#3074FE` | Accent the head is mixed from. |
+| `tail` | `number` | `6` | Length of the cooling trail behind the head, in `em`. |
+| `restOpacity` | `number` | `0.3` | Strength of the not-yet-read text. |
+| `angle` | `number` | `10` | Tilt of the beam in degrees. |
+| `caret` | `boolean` | `true` | Hairline needle on the head. Hidden automatically once the box wraps. |
+| `readout` | `boolean` | `false` | Mono chip beside the text: the percentage, `scan`, `done` or `error`. |
+| `as` | `ElementType` | `'span'` | Element used for the text. |
+| `className` | `string` | — | Additional class name. |
+| `style` | `CSSProperties` | — | Inline style and component CSS custom properties. |
+
+The whole line is painted by a single gradient clipped to the glyphs, so no
+letter is wrapped in a span and nothing is re-laid out — kerning, ligatures and
+line breaks stay exactly as the font made them. Colours are mixed from
+`currentColor`, which means the component inherits the surrounding text colour
+and works on light and dark backgrounds without a theme prop. Style it through
+the `--scan-*` custom properties.
+
+`prefers-reduced-motion` freezes the head at its target and drops the needle
+into place; a finished scan, an error and printed pages all fall back to plain
+ink. The readout rides inside the line and opts back out of the clipped fill, so
+it wraps with the text instead of starting a new box. Selection still works, but
+the highlight paints behind transparent glyphs, so treat heavily-selected copy as
+a poor fit for the effect.
+
 ## Development
 
 ```bash
