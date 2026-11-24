@@ -1,6 +1,8 @@
-# @xylitol/effects
+# @xylitol/ui
 
 A React component collection for expressive front-end effects.
+
+[Repository](https://github.com/xylitolcode/xylitol-ui) · [npm](https://www.npmjs.com/package/@xylitol/ui) · MIT
 
 ## HollowFlowText
 
@@ -9,8 +11,8 @@ text reveals the gradient fill only near the pointer, with a feathered edge and 
 follow-through.
 
 ```tsx
-import { HollowFlowText } from '@xylitol/effects'
-import '@xylitol/effects/style.css'
+import { HollowFlowText } from '@xylitol/ui'
+import '@xylitol/ui/style.css'
 
 export function Hero() {
   return (
@@ -64,8 +66,8 @@ optional badge reports the live `width × height` in rolling digits, and the fra
 glides between words instead of jumping.
 
 ```tsx
-import { DirectionAwareSelection, SelectionTarget } from '@xylitol/effects'
-import '@xylitol/effects/style.css'
+import { DirectionAwareSelection, SelectionTarget } from '@xylitol/ui'
+import '@xylitol/ui/style.css'
 
 export function Intro() {
   return (
@@ -157,6 +159,7 @@ The handwritten hint uses `Caveat`; the showcase page loads it, and the CSS fall
 pnpm install
 pnpm dev      # serves showcase/ at http://127.0.0.1:5173
 pnpm check    # typecheck + build
+pnpm build:site   # static build of showcase/ into dist-site/ (SITE_BASE=/repo/ for Pages)
 ```
 
 The repository keeps the library and the site apart: `src/` is the library and
@@ -167,4 +170,4 @@ library through `../src/index`.
 `pnpm build` emits `dist/` — `index.js`, `index.css`, and the `.d.ts` tree. `package.json`
 sets `"files": ["dist"]`, so a published tarball contains only `dist/`, `README.md` and
 `package.json`; no site code or assets ever ship. Styles are opt-in through
-`@xylitol/effects/style.css`.
+`@xylitol/ui/style.css`.

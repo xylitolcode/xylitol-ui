@@ -7,7 +7,7 @@ export function Hero() {
       <div className="hero__halo" aria-hidden="true" />
       <div className="shell hero__inner">
         <p className="hero__eyebrow" data-reveal>
-          <span>@xylitol/effects</span>
+          <span>@xylitol/ui</span>
           <span className="hero__bullet" aria-hidden="true" />
           <span>React 18.2+</span>
         </p>
@@ -28,8 +28,16 @@ export function Hero() {
           cursor, and a selection frame that knows which edge you came through.
         </p>
 
-        <div className="hero__install" data-reveal>
-          <InstallCommand command="pnpm add @xylitol/effects" />
+        <div className="hero__actions" data-reveal>
+          <InstallCommand command="pnpm add @xylitol/ui" />
+          <a
+            className="ghost-link"
+            href="https://github.com/xylitolcode/xylitol-ui"
+            target="_blank"
+            rel="noreferrer"
+          >
+            GitHub <span aria-hidden="true">↗</span>
+          </a>
         </div>
 
         <p className="hero__cue" data-reveal>

@@ -24,7 +24,7 @@ export function SelectionSection() {
             <SelectionTarget
               words="XYLI TOL"
               icon={<AvatarIcon />}
-              href="https://github.com/xylitolcode"
+              href="https://github.com/xylitolcode/xylitol-ui"
               hint="hover here"
               selected={pinned === 'name'}
               onSelect={() => setPinned(pinned === 'name' ? null : 'name')}
@@ -33,7 +33,7 @@ export function SelectionSection() {
             <SelectionTarget
               words="Effects Kit"
               icon={<CubeIcon />}
-              href="https://github.com/xylitolcode"
+              href="https://github.com/xylitolcode/xylitol-ui"
               selected={pinned === 'kit'}
               onSelect={() => setPinned(pinned === 'kit' ? null : 'kit')}
             />{' '}
@@ -41,7 +41,7 @@ export function SelectionSection() {
             <SelectionTarget
               words="motion studies"
               icon={<BoltIcon />}
-              href="https://github.com/xylitolcode"
+              href="https://github.com/xylitolcode/xylitol-ui"
               selected={pinned === 'motion'}
               onSelect={() => setPinned(pinned === 'motion' ? null : 'motion')}
             />{' '}
