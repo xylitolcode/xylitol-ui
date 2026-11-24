@@ -1,0 +1,89 @@
+.hollow-flow-text {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+  cursor: crosshair;
+  touch-action: manipulation;
+}
+
+.hollow-flow-text__hit-area {
+  cursor: inherit;
+}
+
+.hollow-flow-text__text {
+  font-family: var(--hft-font-family, inherit);
+  font-size: var(--hft-font-size, 154px);
+  font-weight: var(--hft-font-weight, 800);
+  letter-spacing: var(--hft-letter-spacing, -0.055em);
+  text-anchor: middle;
+}
+
+/* Resting state: the wordmark is hollow and only outlines are painted. */
+.hollow-flow-text__base {
+  fill: none;
+  stroke: var(--hft-outline-color, rgba(219, 234, 254, 0.24));
+  stroke-width: var(--hft-outline-width, 1.15px);
+  vector-effect: non-scaling-stroke;
+}
+
+.hollow-flow-text__flow-glow {
+  fill: none;
+  stroke-width: 3.2px;
+  opacity: 0.3;
+  vector-effect: non-scaling-stroke;
+}
+
+.hollow-flow-text__flow {
+  fill: none;
+  stroke-width: var(--hft-flow-width, 1.7px);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: 0.86;
+  vector-effect: non-scaling-stroke;
+}
+
+.hollow-flow-text__spark {
+  fill: none;
+  stroke-width: var(--hft-spark-width, 2.5px);
+  stroke-dasharray: 34 176;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: 0.95;
+  vector-effect: non-scaling-stroke;
+}
+
+.hollow-flow-text__reveal-spot {
+  opacity: 0;
+  transition: opacity 180ms ease;
+}
+
+.hollow-flow-text.is-active .hollow-flow-text__reveal-spot {
+  opacity: 1;
+}
+
+.hollow-flow-text__reveal {
+  pointer-events: none;
+}
+
+.hollow-flow-text__reveal-halo {
+  opacity: var(--hft-halo-opacity, 0.28);
+}
+
+.hollow-flow-text__reveal-fill {
+  opacity: var(--hft-reveal-opacity, 0.96);
+}
+
+.hollow-flow-text__reveal-edge {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.85);
+  stroke-width: 1.4px;
+  opacity: 0.72;
+  vector-effect: non-scaling-stroke;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hollow-flow-text__reveal-spot {
+    transition-duration: 0.01ms;
+  }
+}

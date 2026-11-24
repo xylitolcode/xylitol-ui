@@ -1,0 +1,67 @@
+{
+  "name": "@xylitol/effects",
+  "version": "0.1.0",
+  "description": "A React collection of expressive, reusable text and motion effects.",
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "style": "./dist/index.css",
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    },
+    "./style.css": "./dist/index.css",
+    "./package.json": "./package.json"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build && pnpm run build:types && node scripts/postbuild.mjs",
+    "build:types": "tsc -p tsconfig.build.json",
+    "preview": "vite preview",
+    "typecheck": "tsc --noEmit",
+    "check": "pnpm typecheck && pnpm build",
+    "prepublishOnly": "pnpm check"
+  },
+  "peerDependencies": {
+    "react": ">=18.2"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.6",
+    "@types/react": "19.2.18",
+    "@types/react-dom": "19.2.5",
+    "@vitejs/plugin-react": "^6.3.0",
+    "react": "19.2.7",
+    "react-dom": "19.2.7",
+    "typescript": "~7.0.2",
+    "vite": "^8.3.6"
+  },
+  "keywords": [
+    "react",
+    "text-effect",
+    "animation",
+    "svg",
+    "component-library"
+  ],
+  "license": "MIT",
+  "author": "lxinyuan",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xylitolcode/xylitol-ui.git"
+  },
+  "homepage": "https://github.com/xylitolcode/xylitol-ui#readme",
+  "bugs": {
+    "url": "https://github.com/xylitolcode/xylitol-ui/issues"
+  }
+}
