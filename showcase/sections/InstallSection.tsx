@@ -2,8 +2,8 @@ import { getChapter } from '../registry'
 import { Chapter } from '../ui/Chapter'
 import { CopyButton } from '../ui/CopyButton'
 
-const SNIPPET = `import { DirectionAwareSelection, SelectionTarget } from '@xylitol/ui'
-import '@xylitol/ui/style.css'
+const SNIPPET = `import { DirectionAwareSelection, SelectionTarget } from '@xylitol0520/ui'
+import '@xylitol0520/ui/style.css'
 
 export function Intro() {
   return (

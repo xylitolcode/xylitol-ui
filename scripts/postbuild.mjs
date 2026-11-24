@@ -3,7 +3,7 @@
 // 1) 从 dist/index.d.ts 移除 `import './index.css'`。Vite 库模式需要这一行把 CSS
 //    拉进构建图（否则产不出 dist/index.css），但同一个入口同时用于声明生成，
 //    这行会被带进类型文件；消费者若没开 allowArbitraryExtensions / skipLibCheck
-//    就会报 TS2307。样式通过 `@xylitol/effects/style.css` 显式引入，删掉即可。
+//    就会报 TS2307。样式通过 `@xylitol0520/ui/style.css` 显式引入，删掉即可。
 //
 // 2) 给所有 .d.ts 里的相对导入补上显式扩展名（`./context` → `./context.js`）。
 //    源码用 bundler 解析、不带扩展名没问题，但 Node16/NodeNext 模式下 ESM 规范符

@@ -16,7 +16,7 @@ function TopBar() {
         </a>
         <nav className="topbar__links" aria-label="Project links">
           <a href="https://github.com/xylitolcode/xylitol-ui">GitHub</a>
-          <a href="https://www.npmjs.com/package/@xylitol/ui">npm</a>
+          <a href="https://www.npmjs.com/package/@xylitol0520/ui">npm</a>
         </nav>
       </div>
     </header>
@@ -48,7 +48,7 @@ function Footer() {
         <p className="footer__mark">XYLITOL Effects · v0.1.0</p>
         <nav className="footer__links" aria-label="Footer links">
           <a href="https://github.com/xylitolcode/xylitol-ui">GitHub</a>
-          <a href="https://www.npmjs.com/package/@xylitol/ui">npm</a>
+          <a href="https://www.npmjs.com/package/@xylitol0520/ui">npm</a>
           <a href="#top">Back to top</a>
         </nav>
       </div>

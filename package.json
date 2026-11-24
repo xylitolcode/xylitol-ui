@@ -1,5 +1,5 @@
 {
-  "name": "@xylitol/ui",
+  "name": "@xylitol0520/ui",
   "version": "0.1.0",
   "description": "A React collection of expressive, reusable text and motion effects.",
   "type": "module",
@@ -57,7 +57,11 @@
     "component-library"
   ],
   "license": "MIT",
-  "author": "lxinyuan",
+  "author": {
+    "name": "lxinyuan",
+    "email": "38817626+xylitolcode@users.noreply.github.com",
+    "url": "https://github.com/xylitolcode"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/xylitolcode/xylitol-ui.git"

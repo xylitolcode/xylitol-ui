@@ -7,7 +7,7 @@ export function Hero() {
       <div className="hero__halo" aria-hidden="true" />
       <div className="shell hero__inner">
         <p className="hero__eyebrow" data-reveal>
-          <span>@xylitol/ui</span>
+          <span>@xylitol0520/ui</span>
           <span className="hero__bullet" aria-hidden="true" />
           <span>React 18.2+</span>
         </p>
@@ -29,7 +29,7 @@ export function Hero() {
         </p>
 
         <div className="hero__actions" data-reveal>
-          <InstallCommand command="pnpm add @xylitol/ui" />
+          <InstallCommand command="pnpm add @xylitol0520/ui" />
           <a
             className="ghost-link"
             href="https://github.com/xylitolcode/xylitol-ui"
