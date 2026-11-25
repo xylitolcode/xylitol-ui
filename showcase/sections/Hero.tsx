@@ -24,10 +24,11 @@ export function Hero() {
         </div>
 
         <p className="hero__lede" data-reveal>
-          Four text effects and one button that answers back. An outline that flows and only
+          Five text effects and one button that answers back. An outline that flows and only
           fills under your cursor, a selection frame that knows which edge you came through, a
-          reading head that scans the line, a sentence that mends itself when you rewrite it, and
-          a pill whose light arrives as halftone dots.
+          reading head that scans the line, a sentence that mends itself when you rewrite it, a
+          pill whose light arrives as halftone dots, and a pointer that replays the path it took
+          across the words.
         </p>
 
         <div className="hero__actions" data-reveal>
