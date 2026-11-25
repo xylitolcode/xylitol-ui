@@ -1,0 +1,210 @@
+.mend-text {
+  --mend-hold: 120ms;
+  --mend-collapse: 400ms;
+  --mend-fresh: 180ms;
+  --mend-rule: 240ms;
+  --mend-fresh-ink: 28%;
+  --mend-ink: 40%;
+  --mend-strike: color-mix(in oklab, currentColor 46%, transparent);
+  --mend-strike-width: 1px;
+
+  display: inline;
+  color: inherit;
+}
+
+/* Kept text stays a plain inline run. The line closes itself up by animating
+   the hunks' width, so nothing here ever needs to become a box. */
+.mend-text__run {
+  display: inline;
+}
+
+.mend-hunk {
+  position: relative;
+  display: inline-block;
+  vertical-align: baseline;
+}
+
+.mend-hunk__ink {
+  display: inline-block;
+}
+
+/* `nowrap` only lands after the component measured the run as single-line. A
+   run that wrapped is hidden instead of animated. */
+.mend-hunk[data-fit='single'] {
+  white-space: nowrap;
+}
+
+/* The width keyframes and the ink keyframes share one curve, so the glyphs stay
+   glued to the box edge the whole way instead of spilling out of it. */
+@keyframes mend-squeeze {
+  from {
+    transform: scaleX(1);
+    opacity: 1;
+  }
+  to {
+    transform: scaleX(0);
+    opacity: var(--mend-ink);
+  }
+}
+
+@keyframes mend-unfold {
+  from {
+    transform: scaleX(0);
+    opacity: var(--mend-fresh-ink);
+  }
+  to {
+    transform: scaleX(1);
+    opacity: 1;
+  }
+}
+
+@keyframes mend-close {
+  from {
+    width: var(--mend-w, auto);
+  }
+  to {
+    width: 0;
+  }
+}
+
+@keyframes mend-open {
+  from {
+    width: 0;
+  }
+  to {
+    width: var(--mend-w, auto);
+  }
+}
+
+@keyframes mend-draw {
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes mend-ink {
+  from {
+    opacity: var(--mend-fresh-ink);
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes mend-grow {
+  to {
+    transform: scaleX(1);
+  }
+}
+
+/* --- leaving ------------------------------------------------------------ */
+
+/* The box closes, so the reflow happens with the animation rather than after
+   it. `both` keeps the start frame during the hold, which is the untouched
+   width — nothing moves until the hold is over. */
+.mend-hunk[data-kind='gone'][data-fit='single'] {
+  animation: mend-close var(--mend-collapse) cubic-bezier(.4, 0, .2, 1)
+    var(--mend-hold) both;
+}
+
+.mend-hunk[data-kind='gone'] .mend-hunk__ink {
+  transform-origin: 0 50%;
+  animation: mend-squeeze var(--mend-collapse) cubic-bezier(.4, 0, .2, 1)
+    var(--mend-hold) both;
+}
+
+/* The strike is laid under the words before they go, so the collapse has
+   somewhere to collapse to. `right: 0` keeps it glued to the shrinking box. */
+.mend-hunk[data-kind='gone'] .mend-hunk__rule {
+  position: absolute;
+  top: 52%;
+  right: 0;
+  left: 0;
+  height: var(--mend-strike-width);
+  background-color: var(--mend-strike);
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  animation-name: mend-draw;
+  /* A swap has no hold, so the stroke is given a floor: it still sweeps in
+     rather than popping on in one frame. */
+  animation-duration: max(var(--mend-hold), 140ms);
+  animation-timing-function: linear;
+  animation-delay: var(--mend-hold);
+  animation-fill-mode: both;
+}
+
+/* --- arriving ---------------------------------------------------------- */
+
+/* Ink from 28% up to full, never from zero: text fading in from nothing reads
+   as a loading state, not as a word that just landed. */
+.mend-hunk[data-kind='new'] .mend-hunk__ink {
+  animation: mend-ink var(--mend-fresh) ease-out both;
+}
+
+.mend-hunk[data-kind='new'] .mend-hunk__rule {
+  position: absolute;
+  right: 0;
+  bottom: -0.04em;
+  left: 0;
+  height: var(--mend-strike-width);
+  background-color: var(--mend-strike);
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  animation: mend-grow var(--mend-rule) cubic-bezier(.22, .61, .36, 1) 40ms
+    both;
+}
+
+/* The arriving half of a swap opens at the rate the leaving half closes, so the
+   two cross over inside one width and the sentence is never doubled. */
+.mend-hunk[data-kind='new'][data-swap='true'][data-fit='single'] {
+  animation: mend-open var(--mend-collapse) cubic-bezier(.4, 0, .2, 1) both;
+}
+
+.mend-hunk[data-kind='new'][data-swap='true'] .mend-hunk__ink {
+  transform-origin: 0 50%;
+  animation: mend-unfold var(--mend-collapse) cubic-bezier(.4, 0, .2, 1) both;
+}
+
+/* Its rule is not grown separately: the opening box already carries it. */
+.mend-hunk[data-kind='new'][data-swap='true'] .mend-hunk__rule {
+  animation: none;
+  transform: scaleX(1);
+}
+
+.mend-hunk__rule {
+  transition: opacity 200ms linear;
+}
+
+/* Once the rewrite settles the rules go, leaving the plain new sentence. */
+.mend-text[data-phase='settled'] .mend-hunk__rule {
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mend-hunk[data-kind='gone'] {
+    display: none;
+  }
+
+  .mend-hunk__rule {
+    display: none;
+  }
+
+  .mend-hunk[data-kind='new'] .mend-hunk__ink,
+  .mend-hunk[data-kind='new'][data-swap='true'] {
+    animation: none;
+  }
+}
+
+/* A half-collapsed word prints as a smear, so paper gets the clean sentence. */
+@media print {
+  .mend-hunk[data-kind='gone'],
+  .mend-hunk__rule {
+    display: none;
+  }
+
+  .mend-hunk[data-kind='new'] .mend-hunk__ink,
+  .mend-hunk[data-kind='new'][data-swap='true'] {
+    animation: none;
+    opacity: 1;
+  }
+}

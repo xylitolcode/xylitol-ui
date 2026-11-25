@@ -25,3 +25,6 @@ export type { ScanState, ScanTextProps } from './components/ScanText'
 
 export { DITHER_DEFAULTS, DitherButton } from './components/DitherButton'
 export type { DitherButtonProps, DitherButtonState } from './components/DitherButton'
+
+export { MEND_DEFAULTS, MendText } from './components/MendText'
+export type { MendPhase, MendTextProps } from './components/MendText'
