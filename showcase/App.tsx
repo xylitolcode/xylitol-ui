@@ -1,4 +1,5 @@
 import { CHAPTERS, CHAPTER_SLUGS } from './registry'
+import { useI18n } from './i18n'
 import { useReveal } from './lib/reveal'
 import { useScrollSpy } from './lib/scrollSpy'
 import { Hero } from './sections/Hero'
@@ -12,15 +13,37 @@ import { SelectionSection } from './sections/SelectionSection'
 import { VariantsSection } from './sections/VariantsSection'
 
 function TopBar() {
+  const { locale, copy, setLocale } = useI18n()
+
   return (
     <header className="topbar">
       <div className="shell topbar__inner">
         <a className="topbar__brand" href="#top">
-          XYLITOL <span className="topbar__brand-dim">Effects</span>
+          XYLITOL <span className="topbar__brand-dim">{copy.shell.brandSuffix}</span>
         </a>
-        <nav className="topbar__links" aria-label="Project links">
+        <nav className="topbar__links" aria-label={copy.shell.projectLinks}>
           <a href="https://github.com/xylitolcode/xylitol-ui">GitHub</a>
           <a href="https://www.npmjs.com/package/@xylitol0520/ui">npm</a>
+          <div className="locale-switch" role="group" aria-label={copy.shell.language}>
+            <button
+              type="button"
+              className="locale-switch__option"
+              data-active={locale === 'zh' || undefined}
+              aria-pressed={locale === 'zh'}
+              onClick={() => setLocale('zh')}
+            >
+              中
+            </button>
+            <button
+              type="button"
+              className="locale-switch__option"
+              data-active={locale === 'en' || undefined}
+              aria-pressed={locale === 'en'}
+              onClick={() => setLocale('en')}
+            >
+              EN
+            </button>
+          </div>
         </nav>
       </div>
     </header>
@@ -28,8 +51,10 @@ function TopBar() {
 }
 
 function ChapterRail({ active }: { active: string }) {
+  const { copy } = useI18n()
+
   return (
-    <nav className="rail" aria-label="Chapters">
+    <nav className="rail" aria-label={copy.shell.chapters}>
       {CHAPTERS.map((chapter) => (
         <a
           key={chapter.slug}
@@ -38,7 +63,9 @@ function ChapterRail({ active }: { active: string }) {
           data-active={active === chapter.slug || undefined}
         >
           <span className="rail__index">{chapter.index}</span>
-          <span className="rail__name">{chapter.name}</span>
+          <span className="rail__name">
+            {copy.chapterNames[chapter.slug as keyof typeof copy.chapterNames]}
+          </span>
         </a>
       ))}
     </nav>
@@ -46,14 +73,16 @@ function ChapterRail({ active }: { active: string }) {
 }
 
 function Footer() {
+  const { copy } = useI18n()
+
   return (
     <footer className="footer">
       <div className="shell footer__inner">
         <p className="footer__mark">XYLITOL Effects · v0.1.0</p>
-        <nav className="footer__links" aria-label="Footer links">
+        <nav className="footer__links" aria-label={copy.shell.footerLinks}>
           <a href="https://github.com/xylitolcode/xylitol-ui">GitHub</a>
           <a href="https://www.npmjs.com/package/@xylitol0520/ui">npm</a>
-          <a href="#top">Back to top</a>
+          <a href="#top">{copy.shell.backToTop}</a>
         </nav>
       </div>
     </footer>

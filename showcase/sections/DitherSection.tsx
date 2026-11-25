@@ -1,6 +1,7 @@
 import { useState } from 'react'
 
 import { DitherButton } from '../../src/index'
+import { useI18n } from '../i18n'
 import { getChapter } from '../registry'
 import { Chapter } from '../ui/Chapter'
 
@@ -35,6 +36,7 @@ function Scrub({ label, value, min, max, step, display, onChange }: ScrubProps) 
 
 export function DitherSection() {
   const chapter = getChapter('dither')
+  const { copy } = useI18n()
   const [radius, setRadius] = useState(68)
   const [spark, setSpark] = useState(0.18)
   const [pitch, setPitch] = useState(4)
@@ -47,18 +49,18 @@ export function DitherSection() {
             radius={radius}
             spark={spark}
             cell={pitch}
-            busyLabel="Copying"
-            doneLabel="Copied"
+            busyLabel={copy.dither.busy}
+            doneLabel={copy.dither.done}
             onAction={() => navigator.clipboard.writeText(COMMAND)}
           >
-            Copy install command
+            {copy.dither.button}
           </DitherButton>
         </div>
 
         <div className="console__bar">
           <div className="dither-scrubs">
             <Scrub
-              label="radius"
+              label={copy.dither.radius}
               value={radius}
               min={24}
               max={120}
@@ -67,7 +69,7 @@ export function DitherSection() {
               onChange={setRadius}
             />
             <Scrub
-              label="spark"
+              label={copy.dither.spark}
               value={spark}
               min={0}
               max={0.6}
@@ -76,7 +78,7 @@ export function DitherSection() {
               onChange={setSpark}
             />
             <Scrub
-              label="cell"
+              label={copy.dither.cell}
               value={pitch}
               min={3}
               max={6}
@@ -89,17 +91,8 @@ export function DitherSection() {
       </div>
 
       <div className="dither-prose" data-reveal>
-        <p>
-          Every cell knows one thing: the threshold it answers to, read from a 4×4 Bayer matrix plus
-          a hair of jitter so the tile does not settle into a lattice. Coverage above that threshold
-          switches the cell on, anything below leaves it dark — which is why the halo arrives in
-          rings instead of a blur, and why it holds its shape at any accent colour.
-        </p>
-        <p className="dither-prose__note">
-          Sparks land on four brightness rungs, so nothing in the field is a smooth gradient. The
-          ring is drawn from the press point, not from the pointer, and the loop parks itself as
-          soon as the last cell decays: an idle button costs no frames.
-        </p>
+        <p>{copy.dither.prose}</p>
+        <p className="dither-prose__note">{copy.dither.note}</p>
       </div>
     </Chapter>
   )

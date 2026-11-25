@@ -1,44 +1,26 @@
 import { getChapter } from '../registry'
+import { useI18n } from '../i18n'
 import { Chapter } from '../ui/Chapter'
 import { CopyButton } from '../ui/CopyButton'
 
-const SNIPPET = `import { DirectionAwareSelection, SelectionTarget } from '@xylitol0520/ui'
-import '@xylitol0520/ui/style.css'
-
-export function Intro() {
-  return (
-    <DirectionAwareSelection color="#3074FE" fillColor="transparent">
-      <p>
-        Come at <SelectionTarget words="this word" hint="try it" /> from any side.
-      </p>
-    </DirectionAwareSelection>
-  )
-}`
-
-const NOTES = [
-  'No runtime dependencies',
-  'TypeScript types included',
-  'prefers-reduced-motion aware',
-  'Keyboard focus paints the same frame',
-]
-
 export function InstallSection() {
   const chapter = getChapter('install')
+  const { copy } = useI18n()
 
   return (
     <Chapter {...chapter}>
       <div className="code" data-reveal>
         <div className="code__bar">
           <span className="code__file">Intro.tsx</span>
-          <CopyButton value={SNIPPET} />
+          <CopyButton value={copy.install.snippet} />
         </div>
         <pre className="code__body">
-          <code>{SNIPPET}</code>
+          <code>{copy.install.snippet}</code>
         </pre>
       </div>
 
       <ul className="notes" data-reveal>
-        {NOTES.map((note) => (
+        {copy.install.notes.map((note) => (
           <li className="note" key={note}>
             {note}
           </li>
@@ -46,8 +28,11 @@ export function InstallSection() {
       </ul>
 
       <p className="install-note" data-reveal>
-        Styles are opt-in: import the stylesheet once at your app entry. Every other behaviour is a
-        prop, and a target with no <code>href</code> and no <code>onSelect</code> stays inert text.
+        {copy.install.noteBefore}
+        <code>href</code>
+        {copy.install.noteBetween}
+        <code>onSelect</code>
+        {copy.install.noteAfter}
       </p>
     </Chapter>
   )

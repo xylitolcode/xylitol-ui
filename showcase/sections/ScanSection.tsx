@@ -1,19 +1,15 @@
 import { useState } from 'react'
 
 import { ScanText, type ScanState } from '../../src/index'
+import { useI18n } from '../i18n'
 import { getChapter } from '../registry'
 import { Chapter } from '../ui/Chapter'
 
-const STATES: readonly { value: ScanState; label: string }[] = [
-  { value: 'idle', label: 'idle' },
-  { value: 'pending', label: 'pending' },
-  { value: 'streaming', label: 'streaming' },
-  { value: 'done', label: 'done' },
-  { value: 'error', label: 'error' },
-]
+const STATES: readonly ScanState[] = ['idle', 'pending', 'streaming', 'done', 'error']
 
 export function ScanSection() {
   const chapter = getChapter('scan')
+  const { copy } = useI18n()
   const [state, setState] = useState<ScanState>('streaming')
   const [progress, setProgress] = useState(42)
 
@@ -32,28 +28,29 @@ export function ScanSection() {
             state={state}
             progress={state === 'streaming' ? progress / 100 : undefined}
             readout
+            readoutLabels={copy.scan.readoutLabels}
           >
-            Reading 1,284 tokens for collisions
+            {copy.scan.specimen}
           </ScanText>
         </div>
 
         <div className="console__bar">
-          <div className="console__states" role="group" aria-label="Scan state">
+          <div className="console__states" role="group" aria-label={copy.scan.stateGroup}>
             {STATES.map((entry) => (
               <button
-                key={entry.value}
+                key={entry}
                 className="console__state"
                 type="button"
-                data-active={state === entry.value || undefined}
-                onClick={() => pick(entry.value)}
+                data-active={state === entry || undefined}
+                onClick={() => pick(entry)}
               >
-                {entry.label}
+                {copy.scan.states[entry]}
               </button>
             ))}
           </div>
 
           <label className="console__scrub">
-            <span className="console__scrub-label">progress</span>
+            <span className="console__scrub-label">{copy.scan.progress}</span>
             <input
               type="range"
               min={0}
@@ -68,14 +65,9 @@ export function ScanSection() {
 
       <div className="scan-prose" data-reveal>
         <ScanText as="p" state="streaming" progress={0.58} angle={18} tail={4}>
-          The queue is replaying forty-one events from the last checkpoint, folding each one into
-          the snapshot before the writer accepts new work.
+          {copy.scan.prose}
         </ScanText>
-        <p className="scan-prose__note">
-          Wrapped text keeps its own line breaks and letter spacing — the gradient is clipped to
-          the glyphs, so nothing is re-laid out. The needle steps aside once the box holds more
-          than one line.
-        </p>
+        <p className="scan-prose__note">{copy.scan.note}</p>
       </div>
     </Chapter>
   )

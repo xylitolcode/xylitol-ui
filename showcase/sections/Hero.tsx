@@ -1,7 +1,10 @@
 import { HollowFlowText } from '../../src/index'
+import { useI18n } from '../i18n'
 import { InstallCommand } from '../ui/InstallCommand'
 
 export function Hero() {
+  const { copy } = useI18n()
+
   return (
     <header className="hero" id="top">
       <div className="hero__halo" aria-hidden="true" />
@@ -14,21 +17,17 @@ export function Hero() {
 
         <div className="hero__wordmark" data-reveal>
           <HollowFlowText
-            ariaLabel="Hello XYLITOL"
+            ariaLabel={copy.hero.wordmarkAria}
             fontSize={168}
             fontWeight={800}
             letterSpacing="-0.045em"
           >
-            Hello XYLITOL
+            {copy.hero.wordmark}
           </HollowFlowText>
         </div>
 
         <p className="hero__lede" data-reveal>
-          Five text effects and one button that answers back. An outline that flows and only
-          fills under your cursor, a selection frame that knows which edge you came through, a
-          reading head that scans the line, a sentence that mends itself when you rewrite it, a
-          pill whose light arrives as halftone dots, and a pointer that replays the path it took
-          across the words.
+          {copy.hero.lede}
         </p>
 
         <div className="hero__actions" data-reveal>
@@ -47,7 +46,7 @@ export function Hero() {
           <span className="hero__cue-arrow" aria-hidden="true">
             ↓
           </span>
-          Scroll — every effect below is live
+          {copy.hero.cue}
         </p>
       </div>
     </header>

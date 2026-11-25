@@ -11,6 +11,13 @@ import './ScanText.css'
 
 export type ScanState = 'idle' | 'pending' | 'streaming' | 'done' | 'error'
 
+export interface ScanReadoutLabels {
+  idle: string
+  scanning: string
+  done: string
+  error: string
+}
+
 type ScanTextVariables = CSSProperties & {
   [key: `--scan-${string}`]: string | number | undefined
 }
@@ -39,6 +46,8 @@ export interface ScanTextProps {
   caret?: boolean
   /** Shows a mono readout chip next to the text: percent, or the state name. */
   readout?: boolean
+  /** Readout copy for non-numeric states. Defaults to English labels. */
+  readoutLabels?: ScanReadoutLabels
   /** Element used for the text. Defaults to `span`. */
   as?: ElementType
   className?: string
@@ -53,6 +62,13 @@ export const SCAN_DEFAULTS = {
   restOpacity: 0.3,
   angle: 10,
 } as const
+
+const DEFAULT_READOUT_LABELS: ScanReadoutLabels = {
+  idle: 'idle',
+  scanning: 'scan',
+  done: 'done',
+  error: 'error',
+}
 
 const SEEK = 11
 
@@ -85,6 +101,7 @@ export function ScanText({
   angle = SCAN_DEFAULTS.angle,
   caret = true,
   readout = false,
+  readoutLabels = DEFAULT_READOUT_LABELS,
   as = 'span',
   className,
   style,
@@ -144,11 +161,11 @@ export function ScanText({
       const current = targetRef.current
       chip.textContent =
         state === 'error'
-          ? 'error'
+          ? readoutLabels.error
           : state === 'done'
-            ? 'done'
+            ? readoutLabels.done
             : current === null
-              ? 'scan'
+              ? readoutLabels.scanning
               : `${Math.round(clamp(position, 0, 1) * 100)}%`
     }
 
@@ -160,7 +177,7 @@ export function ScanText({
       el.style.removeProperty('--scan-p')
       el.style.removeProperty('--scan-tail-scale')
       el.style.removeProperty('--scan-caret-o')
-      if (readoutRef.current) readoutRef.current.textContent = 'idle'
+      if (readoutRef.current) readoutRef.current.textContent = readoutLabels.idle
       return () => observer.disconnect()
     }
 
@@ -218,7 +235,7 @@ export function ScanText({
       if (frame) cancelAnimationFrame(frame)
       observer.disconnect()
     }
-  }, [duration, live, readout, reducedMotion, state])
+  }, [duration, live, readout, readoutLabels, reducedMotion, state])
 
   // A frozen head still has to follow `progress`, otherwise reduced motion and
   // a dead scan would be stuck at whatever value they first rendered with.

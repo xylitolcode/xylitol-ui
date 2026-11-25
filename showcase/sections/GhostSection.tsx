@@ -1,23 +1,51 @@
 import { useState } from 'react'
 
 import { GhostPath, readTrace, type GhostPhase } from '../../src/index'
+import { useI18n } from '../i18n'
 import { getChapter } from '../registry'
 import { Chapter } from '../ui/Chapter'
 
 import raw from '../traces/rewrite.json'
 
-const trace = readTrace(raw)
-const TEXT = trace?.text ?? ''
-const STOPS = trace?.steps.length ?? 0
+const zhTrace = readTrace(raw)
+const enText =
+  'Record a real mouse movement, replay it over the same words, and every pause becomes a step in the tutorial.'
+const enTrace = zhTrace ? translateTrace(zhTrace, enText) : null
+
+/** Keep the recorded clock and rhythm, but aim the same path at the English text. */
+function translateTrace(trace: NonNullable<typeof zhTrace>, text: string) {
+  const samples = trace.samples.map(([t, at, bias, dy, kind]) => {
+    // Preserve three visual beats: opening, "replay", and the closing period.
+    const mapped =
+      at <= 5
+        ? at * 3
+        : at <= 22
+          ? 18 + ((at - 5) / 17) * 17
+          : 35 + ((at - 22) / 16) * 72
+
+    return [t, Math.round(mapped), bias, dy, kind] as typeof trace.samples[number]
+  })
+
+  return { ...trace, text, samples }
+}
+
+function traceFor(locale: 'zh' | 'en') {
+  return locale === 'zh' ? zhTrace : enTrace
+}
 
 export function GhostSection() {
   const chapter = getChapter('ghost')
+  const { locale, copy } = useI18n()
   const [mode, setMode] = useState<'play' | 'step'>('play')
   const [step, setStep] = useState(0)
   const [speed, setSpeed] = useState(1)
   const [phase, setPhase] = useState<GhostPhase>('idle')
   const [active, setActive] = useState(-1)
   const [run, setRun] = useState(0)
+  const stops = copy.ghost.steps.length
+
+  const trace = traceFor(locale)
+  const text = locale === 'zh' ? (zhTrace?.text ?? '') : enText
 
   if (!trace) return null
 
@@ -40,7 +68,7 @@ export function GhostSection() {
               onPhase={setPhase}
               onStep={setActive}
             >
-              {TEXT}
+              {text}
             </GhostPath>
           ) : (
             <GhostPath
@@ -50,20 +78,20 @@ export function GhostSection() {
               onPhase={setPhase}
               onStep={setActive}
             >
-              {TEXT}
+              {text}
             </GhostPath>
           )}
         </div>
 
         <div className="console__bar">
-          <div className="console__states" role="group" aria-label="Playback">
+          <div className="console__states" role="group" aria-label={copy.ghost.playbackGroup}>
             <button
               className="console__state"
               type="button"
               data-active={mode === 'play' || undefined}
               onClick={restart}
             >
-              play
+              {copy.ghost.play}
             </button>
             <button
               className="console__state"
@@ -75,20 +103,20 @@ export function GhostSection() {
                 setRun((value) => value + 1)
               }}
             >
-              step
+              {copy.ghost.step}
             </button>
             <button
               className="console__state"
               type="button"
               disabled={mode !== 'step'}
-              onClick={() => setStep((value) => Math.min(value + 1, STOPS - 1))}
+              onClick={() => setStep((value) => Math.min(value + 1, stops - 1))}
             >
-              next →
+              {copy.ghost.next}
             </button>
           </div>
 
           <label className="console__scrub">
-            <span className="console__scrub-label">speed</span>
+            <span className="console__scrub-label">{copy.ghost.speed}</span>
             <input
               type="range"
               min={0.25}
@@ -101,13 +129,13 @@ export function GhostSection() {
           </label>
 
           <span className="ghost-phase" data-phase={phase}>
-            {phase}
+            {copy.ghost.phases[phase]}
           </span>
         </div>
       </div>
 
       <ol className="ghost-steps" data-reveal>
-        {trace.steps.map((label, index) => (
+        {copy.ghost.steps.map((label, index) => (
           <li key={label} data-active={index === active || undefined}>
             <button
               type="button"
@@ -127,15 +155,11 @@ export function GhostSection() {
       <div className="ghost-pair" data-reveal>
         <div className="ghost-narrow">
           <GhostPath trace={trace} speed={0.5} loop>
-            {TEXT}
+            {text}
           </GhostPath>
         </div>
 
-        <p className="ghost-pair__note">
-          同一份 trace，260px 宽，断行位置完全不同。落点仍然贴着那些字——因为存的不是像素，
-          是「第几个字 + 字内偏移」。窗口缩放、换字体、滚动，都不需要重新录。
-          轨迹在换行处断开，不会斜穿两行。
-        </p>
+        <p className="ghost-pair__note">{copy.ghost.pairNote}</p>
       </div>
     </Chapter>
   )
