@@ -9,5 +9,5 @@
     "noEmit": false,
     "allowImportingTsExtensions": false
   },
-  "include": ["src/index.ts", "src/components"]
+  "include": ["src/index.ts", "src/dev", "src/components"]
 }

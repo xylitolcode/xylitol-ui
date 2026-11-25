@@ -1,0 +1,116 @@
+.ghost-path {
+  --ghost-trail: color-mix(in oklab, currentColor 58%, transparent);
+  --ghost-weight: 3.6px;
+
+  position: relative;
+  color: inherit;
+}
+
+/* The overlay is sized and aligned in script, not by `inset: 0`: on a wrapped
+   inline the containing block is the span from the first line box to the last,
+   which is wider than the paragraph itself. */
+.ghost-path__overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  contain: layout;
+  pointer-events: none;
+}
+
+.ghost-path__svg {
+  display: block;
+  overflow: visible;
+}
+
+.ghost-path__trail,
+.ghost-path__glow {
+  fill: none;
+  stroke: var(--ghost-trail);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.ghost-path__trail {
+  opacity: 0.45;
+}
+
+/* The last stretch behind the hand, drawn twice so it reads as cooling ink
+   instead of a uniform wire. */
+.ghost-path__glow {
+  opacity: 1;
+}
+
+.ghost-path__head {
+  fill: var(--ghost-trail);
+  transform-box: fill-box;
+  transform-origin: center;
+  transition: transform 180ms ease;
+}
+
+.ghost-path[data-hand='ring'] .ghost-path__head {
+  fill: none;
+  stroke: var(--ghost-trail);
+  stroke-width: 1.5;
+}
+
+.ghost-path[data-hand='none'] .ghost-path__head,
+.ghost-path[data-hand='none'] .ghost-path__pulse {
+  display: none;
+}
+
+.ghost-path__pulse {
+  fill: none;
+  stroke: var(--ghost-trail);
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+/* A hold that only stops moving reads as a frozen cursor. It grows, it
+   breathes, and only then is it a pause. */
+.ghost-path[data-phase='holding'] .ghost-path__head {
+  transform: scale(1.15);
+}
+
+.ghost-path[data-phase='holding'] .ghost-path__pulse {
+  animation: ghost-path-pulse 1.1s ease-out infinite;
+}
+
+.ghost-path[data-empty='true'] .ghost-path__overlay {
+  display: none;
+}
+
+@keyframes ghost-path-pulse {
+  from {
+    opacity: 0.45;
+    transform: scale(0.7);
+  }
+
+  to {
+    opacity: 0;
+    transform: scale(2.2);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ghost-path__trail,
+  .ghost-path__glow,
+  .ghost-path__pulse {
+    display: none;
+  }
+
+  .ghost-path__head {
+    transition: none;
+  }
+
+  .ghost-path[data-phase='holding'] .ghost-path__head {
+    transform: none;
+  }
+}
+
+@media print {
+  .ghost-path__overlay {
+    display: none;
+  }
+}

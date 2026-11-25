@@ -16,9 +16,15 @@ export default defineConfig({
     // showcase/public 里的 favicon 等资源不进发布包
     copyPublicDir: false,
     lib: {
-      entry: resolve(import.meta.dirname, 'src/index.ts'),
+      // 主入口与 dev 入口分开：录制相关的代码不该进运行时包
+      entry: {
+        index: resolve(import.meta.dirname, 'src/index.ts'),
+        'dev/index': resolve(import.meta.dirname, 'src/dev/index.ts'),
+      },
       formats: ['es'],
-      fileName: 'index',
+      fileName: (_format, entryName) => `${entryName}.js`,
+      // 多入口时 CSS 会按包名命名，显式固定回 index.css，保持对外路径不变
+      cssFileName: 'index',
     },
     rollupOptions: {
       external: ['react', 'react/jsx-runtime'],

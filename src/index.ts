@@ -28,3 +28,8 @@ export type { DitherButtonProps, DitherButtonState } from './components/DitherBu
 
 export { MEND_DEFAULTS, MendText } from './components/MendText'
 export type { MendPhase, MendTextProps } from './components/MendText'
+
+export { GhostPath } from './components/GhostPath'
+export type { GhostPathProps, GhostPhase } from './components/GhostPath'
+export { GHOST_DEFAULTS, readTrace, remapTrace, traceDuration, traceProblem } from './components/GhostPath'
+export type { GhostKind, GhostSample, GhostTrace } from './components/GhostPath'

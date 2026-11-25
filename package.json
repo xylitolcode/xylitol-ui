@@ -21,6 +21,11 @@
       "default": "./dist/index.js"
     },
     "./style.css": "./dist/index.css",
+    "./dev": {
+      "types": "./dist/dev/index.d.ts",
+      "import": "./dist/dev/index.js",
+      "default": "./dist/dev/index.js"
+    },
     "./package.json": "./package.json"
   },
   "publishConfig": {
