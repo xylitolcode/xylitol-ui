@@ -5,6 +5,7 @@ import { Hero } from './sections/Hero'
 import { DitherSection } from './sections/DitherSection'
 import { HollowSection } from './sections/HollowSection'
 import { InstallSection } from './sections/InstallSection'
+import { MendSection } from './sections/MendSection'
 import { ScanSection } from './sections/ScanSection'
 import { SelectionSection } from './sections/SelectionSection'
 import { VariantsSection } from './sections/VariantsSection'
@@ -71,6 +72,7 @@ export function App() {
         <SelectionSection />
         <ScanSection />
         <DitherSection />
+        <MendSection />
         <VariantsSection />
         <InstallSection />
       </main>

@@ -41,17 +41,24 @@ export const CHAPTERS = [
     lede: 'A pill whose surface is a grid of cells and whose light is a 4×4 Bayer matrix. Move across it and the glow arrives as rings of dots that switch on at exact thresholds; press it and a ring travels outward, picking cells off as it passes. Sparks land on four brightness rungs, so nothing in the field is a smooth gradient.',
   },
   {
-    slug: 'variants',
+    slug: 'mend',
     index: '05',
+    name: 'MendText',
+    title: 'The edit reports itself.',
+    lede: 'Hand it a new string and it finds the seam on its own: the words that left squeeze into a struck line, the words that arrived grow out of the same gap. A swap crosses over inside one width instead of showing both sentences side by side, so a revision never turns into a redline.',
+  },
+  {
+    slug: 'variants',
+    index: '06',
     name: 'Props',
     title: 'Same frame, three moods.',
     lede: 'The fill is a prop, not a baked-in decision. Keep it solid, stop at the bare outline, or pin a target open so the box stays where it is. Hover any of the three to bring the frame in.',
   },
   {
     slug: 'install',
-    index: '06',
+    index: '07',
     name: 'Install',
-    title: 'Four components, one stylesheet.',
+    title: 'Five components, one stylesheet.',
     lede: 'Zero runtime dependencies. Drop it into a paragraph and the text keeps flowing like text — no wrappers, no layout shifts, no reset.',
   },
 ] as const satisfies readonly ChapterEntry[]

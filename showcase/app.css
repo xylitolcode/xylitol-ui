@@ -609,7 +609,93 @@ code {
   color: var(--dim);
 }
 
-/* ── 05 variants ─────────────────────────────────────────── */
+/* ── 05 mend ─────────────────────────────────────────────── */
+
+.mend-stage {
+  align-items: flex-start;
+  min-height: clamp(150px, 21vh, 206px);
+  font-weight: 500;
+  line-height: 1.55;
+}
+
+.mend-phase {
+  padding: 6px 10px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  min-width: 9ch;
+  text-align: center;
+}
+
+.mend-phase[data-phase='rewriting'] {
+  border-color: rgba(48, 116, 254, 0.5);
+  color: #a9c2ff;
+}
+
+.mend-phase[data-phase='erasing'] {
+  color: var(--ink);
+}
+
+.mend-prose {
+  display: grid;
+  gap: 16px;
+  max-width: 68ch;
+  margin-top: clamp(38px, 5.5vh, 60px);
+}
+
+.mend-prose p {
+  margin: 0;
+}
+
+.mend-prose .mend-text {
+  color: #d9dde9;
+  font-size: clamp(16.5px, 1.55vw, 20px);
+  line-height: 1.72;
+  letter-spacing: -0.008em;
+}
+
+.mend-prose__hint {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--dim);
+  font-size: 12.5px;
+}
+
+.mend-prose__cycle {
+  padding: 5px 11px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition: color 0.18s ease, border-color 0.18s ease;
+}
+
+.mend-prose__cycle:hover {
+  border-color: var(--line-strong);
+  color: var(--ink);
+}
+
+.mend-prose__note {
+  color: var(--dim);
+  font-size: 13.5px;
+  line-height: 1.72;
+}
+
+.mend-prose__aside {
+  margin-top: 4px !important;
+  color: var(--muted) !important;
+  font-size: clamp(15px, 1.4vw, 18px) !important;
+}
+
+/* ── 06 variants ─────────────────────────────────────────── */
 
 .variants {
   display: grid;
@@ -645,7 +731,7 @@ code {
   line-height: 1.7;
 }
 
-/* ── 06 install ──────────────────────────────────────────── */
+/* ── 07 install ──────────────────────────────────────────── */
 
 .code {
   overflow: hidden;
