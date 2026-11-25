@@ -3,6 +3,7 @@ import { useReveal } from './lib/reveal'
 import { useScrollSpy } from './lib/scrollSpy'
 import { Hero } from './sections/Hero'
 import { DitherSection } from './sections/DitherSection'
+import { GhostSection } from './sections/GhostSection'
 import { HollowSection } from './sections/HollowSection'
 import { InstallSection } from './sections/InstallSection'
 import { MendSection } from './sections/MendSection'
@@ -73,6 +74,7 @@ export function App() {
         <ScanSection />
         <DitherSection />
         <MendSection />
+        <GhostSection />
         <VariantsSection />
         <InstallSection />
       </main>

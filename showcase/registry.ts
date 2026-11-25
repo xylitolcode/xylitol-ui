@@ -48,17 +48,24 @@ export const CHAPTERS = [
     lede: 'Hand it a new string and it finds the seam on its own: the words that left squeeze into a struck line, the words that arrived grow out of the same gap. A swap crosses over inside one width instead of showing both sentences side by side, so a revision never turns into a redline.',
   },
   {
-    slug: 'variants',
+    slug: 'ghost',
     index: '06',
+    name: 'GhostPath',
+    title: 'The tutorial is a recording, not a screenshot.',
+    lede: 'A pointer path is stored as character offsets rather than pixels, then replayed on the paragraph: the trail follows the words, widens with speed, and stops breathing at each hold. Narrow the window and it still lands on the same characters — because the recording remembers which word it was pointing at.',
+  },
+  {
+    slug: 'variants',
+    index: '07',
     name: 'Props',
     title: 'Same frame, three moods.',
     lede: 'The fill is a prop, not a baked-in decision. Keep it solid, stop at the bare outline, or pin a target open so the box stays where it is. Hover any of the three to bring the frame in.',
   },
   {
     slug: 'install',
-    index: '07',
+    index: '08',
     name: 'Install',
-    title: 'Five components, one stylesheet.',
+    title: 'Six components, one stylesheet.',
     lede: 'Zero runtime dependencies. Drop it into a paragraph and the text keeps flowing like text — no wrappers, no layout shifts, no reset.',
   },
 ] as const satisfies readonly ChapterEntry[]

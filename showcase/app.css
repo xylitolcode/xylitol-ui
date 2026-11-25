@@ -695,7 +695,107 @@ code {
   font-size: clamp(15px, 1.4vw, 18px) !important;
 }
 
-/* ── 06 variants ─────────────────────────────────────────── */
+/* ── 06 ghost ────────────────────────────────────────────── */
+
+.ghost-stage {
+  display: block;
+  color: #d9dde9;
+  line-height: 1.55;
+}
+
+.ghost-stage .ghost-path,
+.ghost-narrow .ghost-path {
+  --ghost-trail: #7ba1ff;
+}
+
+.ghost-phase {
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+}
+
+.ghost-phase[data-phase='holding'] {
+  color: #a9c2ff;
+}
+
+.ghost-steps {
+  display: grid;
+  gap: 0;
+  max-width: 62ch;
+  padding: 0;
+  margin: clamp(28px, 4vh, 44px) 0 0;
+  list-style: none;
+}
+
+.ghost-steps button {
+  display: flex;
+  gap: 16px;
+  align-items: baseline;
+  width: 100%;
+  padding: 12px 0;
+  border: 0;
+  border-top: 1px solid var(--line);
+  background: none;
+  color: var(--muted);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: color 0.18s ease;
+}
+
+.ghost-steps li:last-child button {
+  border-bottom: 1px solid var(--line);
+}
+
+.ghost-steps button:hover,
+.ghost-steps li[data-active] button {
+  color: var(--ink);
+}
+
+.ghost-steps__index {
+  color: var(--dim);
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+}
+
+.ghost-steps li[data-active] .ghost-steps__index {
+  color: #a9c2ff;
+}
+
+.ghost-steps__label {
+  font-size: 15px;
+  line-height: 1.55;
+}
+
+.ghost-pair {
+  display: flex;
+  flex-wrap: wrap;
+  gap: clamp(26px, 4vw, 52px);
+  align-items: flex-start;
+  margin-top: clamp(38px, 5vh, 60px);
+}
+
+.ghost-narrow {
+  flex: 0 0 260px;
+  padding-left: 18px;
+  border-left: 1px solid var(--line);
+  color: #d9dde9;
+  font-size: 15px;
+  line-height: 1.85;
+}
+
+.ghost-pair__note {
+  flex: 1 1 320px;
+  max-width: 46ch;
+  margin: 0;
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1.72;
+}
+
+/* ── 07 variants ─────────────────────────────────────────── */
 
 .variants {
   display: grid;
@@ -731,7 +831,7 @@ code {
   line-height: 1.7;
 }
 
-/* ── 07 install ──────────────────────────────────────────── */
+/* ── 08 install ──────────────────────────────────────────── */
 
 .code {
   overflow: hidden;

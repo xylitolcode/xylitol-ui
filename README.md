@@ -292,6 +292,86 @@ plain key. The root is a real `<button>`, so focus, Enter and Space all work —
 keyboard press starts its ring at the centre, since there is no pointer to start
 it from.
 
+## GhostPath
+
+A recorded pointer path, replayed over a paragraph. The trail follows the words,
+thins out as it speeds up, and breathes at every hold. It replaces the
+screenshot-plus-arrow vocabulary of a tutorial with the sentence itself acting
+out what to do.
+
+```tsx
+import { GhostPath, readTrace } from '@xylitol0520/ui'
+import '@xylitol0520/ui/style.css'
+
+import raw from './traces/rewrite.json'
+
+export function Walkthrough() {
+  const trace = readTrace(raw)
+  if (!trace) return null
+
+  return (
+    <p>
+      <GhostPath trace={trace} loop onStep={(step) => console.log(step)}>
+        {trace.text}
+      </GhostPath>
+    </p>
+  )
+}
+```
+
+The trace stores character offsets, not pixels: each sample is `[t, at, bias, dy,
+kind]`, where `at` is the UTF-16 offset of the character under the pointer, `bias`
+is the fraction across that character's box, and `dy` is the fraction down its
+line. Reflow the paragraph to 320px and the head still lands on the same word —
+nothing has to be re-recorded. Characters that survive a rewrite are remapped
+through the same diff `MendText` uses, so a trace recorded against an older
+version of the sentence keeps pointing at the right characters.
+
+| State | Meaning |
+| --- | --- |
+| `idle` | Nothing has played. |
+| `playing` | The head is travelling. |
+| `holding` | Parked on a pause, waiting for `pauseAt` to move on. |
+| `ended` | Last sample reached; the head stays where it stopped. |
+
+### Props
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `trace` | `GhostTrace` | required | Recorded path, steps and source text. |
+| `children` | `string` | required | The text being pointed at. Never wrapped or split. |
+| `speed` | `number` | `1` | Playback rate; `0.5` for a tutorial, `0.25` for a stage. |
+| `progress` | `number` | — | Controlled 0–1. Supplying it hands the clock to the caller. |
+| `pauseAt` | `number` | — | Step mode: hold at the nth pause until the index changes. |
+| `loop` | `boolean` | `false` | Replay 900ms after the last sample. |
+| `hand` | `'dot' \| 'ring' \| 'none'` | `'dot'` | What rides the head. |
+| `trail` | `string` | inherited ink, 58% | Trail colour. |
+| `weight` | `number` | `3.6` | Widest the trail gets, in pixels. |
+| `onStep` | `(index: number) => void` | — | Fires when the head enters a pause. |
+| `onPhase` | `(phase: GhostPhase) => void` | — | Fires on phase changes. |
+| `as` | `ElementType` | `'span'` | Element used for the text. |
+
+Only the characters the trace visits get measured — a few dozen `Range` queries,
+run once per resize, font load or text change. Playback then reads nothing from
+the layout: the overlay moves with the text because it shares the text's
+containing block, so scrolling costs nothing.
+
+Two things the component deliberately does not do. It does not render the steps:
+they are content, the caller owns the `<ol>`, and `onStep` is how it knows which
+one is live. And it does not record: `usePointerTrace` lives in
+`@xylitol0520/ui/dev`, so the recorder never enters the runtime bundle.
+
+```tsx
+import { usePointerTrace } from '@xylitol0520/ui/dev'
+
+const { start, mark, stop } = usePointerTrace(ref)
+// start() → move the pointer over the text → mark() at each hold → stop(steps)
+```
+
+`prefers-reduced-motion` parks the hand on the last stop and drops the trail, and
+printed pages lose the overlay entirely — the path is rhetoric, the stops are
+content. Style it through `--ghost-trail` and `--ghost-weight`.
+
 ## Development
 
 ```bash
